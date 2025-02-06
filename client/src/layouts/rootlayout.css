@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+.rootlayout {
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+    height: 100vh;
+
+    padding: 16px 24px;
+    display:flex;
+    flex-direction: column;
+
+    nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .navbar {
+        display: flex;
+    }
+
+    main{
+       overflow: hidden;
+        flex:1
+    }
+
+}
+
+

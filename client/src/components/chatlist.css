@@ -1,0 +1,24 @@
+.dashboard-link {
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+  }
+  
+  .dashboard-link:hover {
+    background: rgba(139, 92, 246, 0.2);
+    color: #a78bfa;
+  }
+  
+  .chat-link {
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    border-radius: 6px;
+    transition: all 0.3s;
+  }
+  
+  .chat-link:hover {
+    background: rgba(139, 92, 246, 0.2);
+    color: #c4b5fd;
+  }
+  
