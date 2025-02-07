@@ -38,7 +38,7 @@ export default function DashBoardLayout() {
                     className="absolute bottom-9 z-[10] left-1 md:hidden cursor-pointer"
                     onClick={() => setMenu(!toggleMenu)}
                 >
-                    <img src="/arrow.png" className="size-10 p-2" />
+                    <img src="/arrow.png" className="rotate-90 size-10 p-2" />
                 </button>
 
                 {/* Apply blur effect only on mobile screens using Tailwind's media queries */}
