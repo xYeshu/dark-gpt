@@ -72,7 +72,7 @@ export default function DashBoard() {
     };
 
     return (
-        <div className="flex pt-30 flex-col h-screen items-center text-white px-4">
+        <div className="flex  md:pt-30 pt-15 flex-col h-screen items-center text-white px-4">
             {/* Header */}
             <div className="flex flex-col items-center text-center mb-8">
                 <img
@@ -103,7 +103,7 @@ export default function DashBoard() {
             </div>
 
             {/* Chat Input Form */}
-            <div className="w-full flex mt-20 justify-center">
+            <div className="w-full flex md:mt-20 mt-10 justify-center">
                 <form
                     onSubmit={handleSubmit}
                     className={`absolute md:w-[60%] w-[80%]  gap-2 items-center flex px-2 py-2 rounded-full transition-all duration-500 ${
