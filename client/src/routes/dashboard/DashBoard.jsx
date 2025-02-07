@@ -3,8 +3,22 @@ import { useNavigate } from "react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Upload from "../../upload/Upload";
 import ywlogoc from "/ywlogoc.svg";
+import { Link } from "react-router";
+import model from '../../lib/gemini';
 
 export default function DashBoard() {
+    const chat = model.startChat({
+        history: [
+        
+        ],
+      });
+
+      
+
+    
+    const [question, setQuestion] = useState("");
+    const [answer, setAnswer] = useState("");
+
     const [img, setImg] = useState({
         isLoading: false,
         error: "",
@@ -25,27 +39,36 @@ export default function DashBoard() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
-    const mutation = useMutation({
-        mutationFn: async (text) => {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chats`, {
-                method: "POST",
-                credentials: "include",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ text }),
-            });
-            return await res.json();
-        },
-        onSuccess: (id) => {
-            queryClient.invalidateQueries({ queryKey: ["userChats"] });
-            navigate(`/dashboard/chats/${id}`);
-        },
-    });
+    const add = async (text, isInitial) => {
+        if(!isInitial)  setQuestion(text);
+
+        try{
+       
+
+        const result = await chat.sendMessageStream(Object.entries(img.aiData).length ? [img.aiData, text] : [text] );
+        
+        let accumulatedText ="";
+        
+        for await (const chunk of result.stream) {
+            const chunkText = chunk.text();
+            accumulatedText+= chunkText;
+            setAnswer(accumulatedText)
+          }
+         
+        } catch(error){
+            console.log(error);
+            setAnswer("An error occurred.");
+          }
+    }
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        navigate(`/dashboard/chats/ss`);
         const text = e.target.text.value;
         if (!text) return;
-        mutation.mutate(text);
+        add(text, false)
+       
     };
 
     return (

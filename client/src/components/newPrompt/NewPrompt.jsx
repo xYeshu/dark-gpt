@@ -13,13 +13,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 export default function NewPrompt({data}) {
 
     const chat = model.startChat({
-        history:
-         [
-    //         data?.history.map(({role,parts})=>(
-    //         {role,parts:[{text:parts[0].text}],
-    //     }
-    // ))
-],
+        history: [
+        
+        ],
       });
 
       
@@ -41,41 +37,6 @@ export default function NewPrompt({data}) {
     },[question, answer, img.dbData])
 
 
-    const queryClient = useQueryClient();
-
-
-    const mutation = useMutation({
-        mutationFn: ()=>{ return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${data._id}`, {
-                method:"PUT",
-                credentials:"include",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body: JSON.stringify({ question: question.length ? question : undefined,
-                    answer  , img: img.dbData?.filepath || undefined,
-
-                })
-            }).then((res)=>res.json())
-
-        },
-     onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["chat", data._id] }).then(()=>{
-        formRef.current.reset();
-        setQuestion("")
-        setAnswer("")
-        setImg({ isLoading: false,
-            error: "",
-            dbData: {},
-            aiData: {},})
-      });
-     
-    },
-    onError: (err)=>{
-        console.log(err)
-    }
-      })
-
 
 
     const add = async (text, isInitial) => {
@@ -93,7 +54,7 @@ export default function NewPrompt({data}) {
             accumulatedText+= chunkText;
             setAnswer(accumulatedText)
           }
-          mutation.mutate()
+         
         } catch(error){
             console.log(error);
             setAnswer("An error occurred.");
@@ -105,6 +66,7 @@ export default function NewPrompt({data}) {
         const text = e.target.text?.value;
         if (!text) return;
         add(text, false)
+        formRef.current.reset();
     };
 
     useEffect(()=>{
@@ -116,8 +78,8 @@ export default function NewPrompt({data}) {
 
     return (
         <>
-            {question && <div className='message user'>{question}</div>}
-            {answer && (<div className='message '>{<Markdown>{answer}</Markdown>}</div>)}
+            {question && <div className='message user text-lg font-thin bg-slate-800'>{question}</div>}
+            {answer && (<div className='message text-lg  font-thin'>{<Markdown>{answer}</Markdown>}</div>)}
             {img.isLoading && <div>Loading...</div>}
             {img.dbData?.filePath &&
                 (<IKImage
@@ -129,6 +91,7 @@ export default function NewPrompt({data}) {
                 />
                 )
             }
+        <div className="endChat" ref={ref}></div>
         <div className="endChat w-full flex justify-center " ref={ref}> </div>
             <form ref={formRef} onSubmit={handleSubmit} className="shadow-[0_0_50px_rgba(139,92,246,0.5)]  bottom-5 absolute md:w-[70%] w-[80%]  bg-stone-950 gap-2 items-center  flex px-2 py-2 rounded-full">    
                 <Upload setImg={setImg} bgc="bg-gray-400 hover:bg-stone-200 transition" />

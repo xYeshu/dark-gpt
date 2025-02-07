@@ -10,14 +10,7 @@ import { SignOutButton } from '@clerk/clerk-react'
 export default function ChatList() {
   const [price, setPrice] = useState(true);
 
-  const { isPending, error, data } = useQuery({
-    queryKey: ["userChats"],
-    queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/api/userchats`, {
-        credentials: "include",
-      }).then((res) => res.json()),
-  });
-
+ 
   return (
     <div className="h-full flex flex-col gap-6 mx-3  p-4 bg-gray-900 border border-gray-700   text-white rounded-xl ">
       {/* Minimal Animated Pricing Section */}
@@ -59,21 +52,31 @@ export default function ChatList() {
       </div>
 
       {/* Chats Section */}
-      <div className="chats flex flex-col h-[40vh] overflow-y-auto">
+      <div className="chats flex gap-1 flex-col h-[40vh] overflow-y-auto">
         <h2 className="text-lg  text-purple-400">CHATS</h2>
-        {isPending
-          ? "Loading..."
-          : error
-          ? "Something went wrong"
-          : data?.map((chat) => (
+        
               <Link
-                key={chat._id}
+               
                 className="chat-link"
-                to={`/dashboard/chats/${chat._id}`}
-              >
-                💬 {chat.title}
+                
+              to="#">
+                💬 How to test API Security...
               </Link>
-            ))}
+              <Link
+               
+                className="chat-link"
+                
+              to="#">
+                💬 How to make Malware...
+              </Link>
+              <Link
+               
+                className="chat-link"
+                
+              to="#">
+                💬 How to test Phishling Links...
+              </Link>
+         
       </div>
 
       {/* Bottom Section */}
