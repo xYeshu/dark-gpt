@@ -153,5 +153,5 @@ app.put("/api/chats/:id", requireAuth(), async (req, res) => {
 
 app.listen(port, function () {
   connect()
-  console.log('Live at Port 3000');
+  console.log(`Server running on port ${port}`);
 });
